@@ -37,7 +37,7 @@ if "flash_success" not in st.session_state:
     st.session_state.flash_success = None
 
 
-# ===================== SIDEBAR MENU (NO SELECTBOX) =====================
+# ===================== SIDEBAR =====================
 st.sidebar.title("📂 Menu Sistem")
 
 if st.sidebar.button("🔍 Diagnosa Kerusakan", use_container_width=True):
@@ -48,6 +48,12 @@ if st.sidebar.button("🧠 Manajemen Gejala", use_container_width=True):
 
 if st.sidebar.button("📐 Manajemen Rule", use_container_width=True):
     st.session_state.page = "rule"
+
+# ===== SIDEBAR WATERMARK =====
+st.sidebar.markdown("---")
+st.sidebar.caption("👥 **Kelompok 2 Y7C**")
+st.sidebar.caption("📘 Sistem Berbasis Pengetahuan")
+st.sidebar.caption("© 2026")
 
 
 # ===================== FLASH MESSAGE =====================

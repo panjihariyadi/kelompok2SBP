@@ -1,0 +1,77 @@
+[
+  {
+    "kerusakan": "Kerusakan RAM",
+    "gejala": ["g01", "g02", "g03"],
+    "tingkat": "Sedang",
+    "cek": [
+      "Lepas dan pasang ulang RAM",
+      "Bersihkan pin RAM",
+      "Tes menggunakan RAM lain"
+    ],
+    "solusi": "Ganti modul RAM jika error masih terjadi"
+  },
+  {
+    "kerusakan": "Kerusakan Storage (HDD/SSD)",
+    "gejala": ["g04", "g05", "g06", "g07"],
+    "tingkat": "Berat",
+    "cek": [
+      "Cek SMART disk",
+      "Scan bad sector",
+      "Coba install OS di disk lain"
+    ],
+    "solusi": "Backup data segera dan ganti SSD"
+  },
+  {
+    "kerusakan": "Overheating (Sistem Pendingin)",
+    "gejala": ["g08", "g09", "g10"],
+    "tingkat": "Sedang",
+    "cek": [
+      "Bersihkan kipas dan heatsink",
+      "Ganti thermal paste",
+      "Pastikan airflow lancar"
+    ],
+    "solusi": "Lakukan perawatan sistem pendingin"
+  },
+  {
+    "kerusakan": "Kerusakan Baterai",
+    "gejala": ["g11", "g12", "g13"],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek kesehatan baterai",
+      "Gunakan charger original",
+      "Kalibrasi baterai"
+    ],
+    "solusi": "Ganti baterai jika drop"
+  },
+  {
+    "kerusakan": "Kerusakan LCD / Display",
+    "gejala": ["g14", "g15", "g16"],
+    "tingkat": "Sedang",
+    "cek": [
+      "Cek kabel fleksibel LCD",
+      "Tes dengan monitor eksternal"
+    ],
+    "solusi": "Ganti panel LCD jika diperlukan"
+  },
+  {
+    "kerusakan": "Kerusakan Keyboard / Touchpad",
+    "gejala": ["g17", "g18", "g19"],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek konektor keyboard",
+      "Tes keyboard eksternal"
+    ],
+    "solusi": "Ganti modul keyboard atau touchpad"
+  },
+  {
+    "kerusakan": "Kerusakan Motherboard",
+    "gejala": ["g20", "g21", "g22"],
+    "tingkat": "Berat",
+    "cek": [
+      "Cek tegangan masuk",
+      "Cek IC power",
+      "Tes minimal hardware"
+    ],
+    "solusi": "Perlu perbaikan level board atau ganti motherboard"
+  }
+]

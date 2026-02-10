@@ -1,112 +1,226 @@
 import streamlit as st
+import json
+import os
 
-# Setup tab browser biar gak cuma tulisan 'streamlit'
-st.set_page_config(page_title="Diagnosa Laptop Kelompok 2", page_icon="💻", layout="centered")
+st.set_page_config(
+    page_title="Sistem Pakar Diagnosa Laptop",
+    page_icon="💻",
+    layout="centered"
+)
 
-# --- BAGIAN ATAS (JUDUL) ---
-st.markdown("<h1 style='text-align: center;'>💻 Cek Kerusakan Laptop</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'>Aplikasi ini bantu nebak laptop kamu kenapa-napa berdasarkan gejalanya.</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-weight: bold;'>By: Kelompok 2 Cihuy</p>", unsafe_allow_html=True)
-st.markdown("---")
+GEJALA_FILE = "gejala.json"
+RULES_FILE = "rules.json"
 
-st.subheader("Pilih gejala yang muncul:")
 
-# Isinya sama kayak tadi, cuma variabelnya dipendekin biar gak pusing bacanya
-labels = {
-    "g01": "Sering Blue Screen (BSOD)", "g02": "Bunyi beep berulang saat nyala", "g03": "Aplikasi sering Force Close",
-    "g04": "Booting lama banget (>3 menit)", "g05": "Muncul 'No Bootable Device'", "g18": "Laptop freeze pas buka file",
-    "g19": "Gagal pas install ulang Windows", "g20": "Muncul pesan 'Disk Error'", "g21": "Folder mendadak ilang/corrupt",
-    "g22": "Ada bunyi klik/detak di dalem", "g16": "Mati total (Gak ada lampu nyala)", "g17": "Bau hangus atau ada percikan",
-    "g23": "Lampu power cuma kedip-kedip", "g24": "Lubang USB gak fungsi", "g25": "Webcam gak kebaca",
-    "g26": "Wi-Fi atau Bluetooth ilang", "g27": "Jam/Waktu BIOS ngaco terus", "g06": "Mati sendiri pas lagi kerja berat",
-    "g07": "Body bawah panas banget", "g08": "Kipas berisik kyk mesin jet", "g28": "Kipas gak ada anginnya",
-    "g29": "Laptop lemot pas udah panas", "g30": "Muncul tulisan 'Fan Error'", "g31": "Keyboard berasa panas",
-    "g32": "Suka restart sendiri", "g09": "Dicas tapi gak nambah (Not Charging)", "g10": "Mati pas kabel casan dicabut",
-    "g33": "Batre boros banget (Drop)", "g34": "Batre kelihatannya kembung", "g35": "Batok charger panas bgt",
-    "g36": "Lobang charger goyang", "g37": "Lampu casan mati", "g11": "Layar bergaris",
-    "g12": "Layar kedip-kedip (flicker)", "g13": "Layar redup bgt kyk mati", "g38": "Layar putih polos doang",
-    "g39": "Ada titik item (Dead Pixel)", "g40": "Warna layar aneh/pudar", "g41": "Layar goyang pas disentuh",
-    "g42": "Ada bayangan di layar", "g14": "Ada tombol yang gak fungsi", "g15": "Ngetik sendiri (Ghost Typing)",
-    "g43": "Tombol keras atau lengket", "g44": "Klik kiri/kanan touchpad gak bisa", "g45": "Kursor lari-lari sendiri",
-    "g47": "Touchpad mati total", "g48": "Bunyi 'tit' pas ngetik",
-    "g49": "Ngetik huruf keluar angka", "g50": "Ngetik berasa delay"
-}
+# ===================== UTIL =====================
+def load_json(file):
+    if not os.path.exists(file):
+        return {} if "gejala" in file else []
+    with open(file, "r") as f:
+        return json.load(f)
 
-# Bikin menu dropdown biar gak menuh-menuhin layar
-kiri, kanan = st.columns(2)
 
-with kiri:
-    with st.expander("📁 Masalah RAM & Storage"):
-        v01 = st.checkbox(labels["g01"]); v02 = st.checkbox(labels["g02"]); v03 = st.checkbox(labels["g03"])
-        v04 = st.checkbox(labels["g04"]); v05 = st.checkbox(labels["g05"]); v18 = st.checkbox(labels["g18"])
-        v19 = st.checkbox(labels["g19"]); v20 = st.checkbox(labels["g20"]); v21 = st.checkbox(labels["g21"]); v22 = st.checkbox(labels["g22"])
+def save_json(file, data):
+    with open(file, "w") as f:
+        json.dump(data, f, indent=2)
 
-    with st.expander("🔌 Masalah Motherboard"):
-        v16 = st.checkbox(labels["g16"]); v17 = st.checkbox(labels["g17"]); v23 = st.checkbox(labels["g23"])
-        v24 = st.checkbox(labels["g24"]); v25 = st.checkbox(labels["g25"]); v26 = st.checkbox(labels["g26"]); v27 = st.checkbox(labels["g27"])
 
-    with st.expander("❄️ Suhu & Kipas"):
-        v06 = st.checkbox(labels["g06"]); v07 = st.checkbox(labels["g07"]); v08 = st.checkbox(labels["g08"])
-        v28 = st.checkbox(labels["g28"]); v29 = st.checkbox(labels["g29"]); v30 = st.checkbox(labels["g30"])
-        v31 = st.checkbox(labels["g31"]); v32 = st.checkbox(labels["g32"])
+gejala = load_json(GEJALA_FILE)
+rules = load_json(RULES_FILE)
 
-with kanan:
-    with st.expander("🖥️ Masalah Layar"):
-        v11 = st.checkbox(labels["g11"]); v12 = st.checkbox(labels["g12"]); v13 = st.checkbox(labels["g13"])
-        v38 = st.checkbox(labels["g38"]); v39 = st.checkbox(labels["g39"]); v40 = st.checkbox(labels["g40"])
-        v41 = st.checkbox(labels["g41"]); v42 = st.checkbox(labels["g42"])
 
-    with st.expander("🔋 Batre & Casan"):
-        v09 = st.checkbox(labels["g09"]); v10 = st.checkbox(labels["g10"]); v33 = st.checkbox(labels["g33"])
-        v34 = st.checkbox(labels["g34"]); v35 = st.checkbox(labels["g35"]); v36 = st.checkbox(labels["g36"]); v37 = st.checkbox(labels["g37"])
+# ===================== SESSION STATE =====================
+if "page" not in st.session_state:
+    st.session_state.page = "diagnosa"
 
-    with st.expander("⌨️ Keyboard & Touchpad"):
-        v14 = st.checkbox(labels["g14"]); v15 = st.checkbox(labels["g15"]); v43 = st.checkbox(labels["g43"])
-        v44 = st.checkbox(labels["g44"]); v45 = st.checkbox(labels["g45"]); v47 = st.checkbox(labels["g47"])
-        v48 = st.checkbox(labels["g48"]); v49 = st.checkbox(labels["g49"]); v50 = st.checkbox(labels["g50"])
+if "flash_success" not in st.session_state:
+    st.session_state.flash_success = None
 
-st.markdown("---")
 
-# --- BAGIAN LOGIKA (CORE NYA) ---
-if st.button("CEK SEKARANG", use_container_width=True):
-    hasil_akhir = [] # List buat nampung diagnosa yang cocok
-    
-    # Fungsi simpel buat narik teks gejala yang dicentang
-    def dapet_gejala(list_id):
-        return [labels[i] for i in list_id if globals().get(f"v{i[1:]}")]
+# ===================== SIDEBAR MENU (NO SELECTBOX) =====================
+st.sidebar.title("📂 Menu Sistem")
 
-    # Aturan mainnya (Rules). Pakai AND kalau butuh beberapa gejala barengan, pakai OR kalau satu aja udah cukup.
-    if (v01 and v02) or (v03 and v18 and v48):
-        hasil_akhir.append({"n": "RAM (Memory)", "g": dapet_gejala(["g01", "g02", "g03", "g18", "g48"]), "s": "Coba bersihin pin RAM pakai penghapus atau ganti RAM baru."})
-    
-    if v04 or v05 or v19 or v20 or v21 or v22:
-        hasil_akhir.append({"n": "Penyimpanan (HDD/SSD)", "g": dapet_gejala(["g04", "g05", "g18", "g19", "g20", "g21", "g22"]), "s": "Buruan backup data! Disk kamu kyknya udah mau wassalam. Ganti ke SSD biar kenceng."})
-        
-    if v06 or v07 or v08 or v28 or v29 or v30 or v31:
-        hasil_akhir.append({"n": "Laptop Kepanasan (Overheat)", "g": dapet_gejala(["g06", "g07", "g08", "g28", "g29", "g30", "g31"]), "s": "Bersihin debu di kipas terus ganti thermal paste-nya."})
+if st.sidebar.button("🔍 Diagnosa Kerusakan", use_container_width=True):
+    st.session_state.page = "diagnosa"
 
-    if v09 or v10 or v33 or v34 or v37:
-        hasil_akhir.append({"n": "Masalah Batre", "g": dapet_gejala(["g09", "g10", "g33", "g34", "g37"]), "s": "Batre udah drop atau kembung. Ganti unit baru biar aman."})
+if st.sidebar.button("🧠 Manajemen Gejala", use_container_width=True):
+    st.session_state.page = "gejala"
 
-    if v11 or v12 or v13 or v38 or v39 or v40 or v41 or v42:
-        hasil_akhir.append({"n": "Masalah Layar (LCD)", "g": dapet_gejala(["g11", "g12", "g13", "g38", "g39", "g40", "g41", "g42"]), "s": "Cek kabel fleksibelnya, kalo tetep gitu ya harus ganti panel LCD."})
+if st.sidebar.button("📐 Manajemen Rule", use_container_width=True):
+    st.session_state.page = "rule"
 
-    if v14 or v15 or v43 or v44 or v45 or v47 or v49 or v50:
-        hasil_akhir.append({"n": "Keyboard / Touchpad", "g": dapet_gejala(["g14", "g15", "g43", "g44", "g45", "g47", "g49", "g50"]), "s": "Ganti modul keyboard atau touchpadnya. Kalo kena air, langsung matiin laptopnya."})
 
-    if v16 or v17 or v23 or v24 or v25 or v26 or v27:
-        hasil_akhir.append({"n": "Motherboard (Mesin)", "g": dapet_gejala(["g16", "g17", "g23", "g24", "g25", "g26", "g27"]), "s": "Ini masalah berat. Harus dibawa ke tukang servis spesialis mesin."})
+# ===================== FLASH MESSAGE =====================
+if st.session_state.flash_success:
+    st.success(st.session_state.flash_success)
+    st.session_state.flash_success = None
 
-    # --- TAMPILIN HASILNYA ---
-    if hasil_akhir:
-        st.subheader("Hasil Cek:")
-        for h in hasil_akhir:
-            with st.container():
-                st.error(f"### Kerusakan: {h['n']}")
-                st.markdown("**Gejala yang kamu pilih:**")
-                for g in h['g']:
-                    st.markdown(f"- {g}")
-                st.success(f"**Solusi:** {h['s']}")
-                st.markdown("---")
-    else:
-        st.warning("Belum bisa nebak. Coba centang gejala yang lebih spesifik.")
+
+# =================================================
+# 🔍 DIAGNOSA
+# =================================================
+if st.session_state.page == "diagnosa":
+    st.title("🔍 Diagnosa Kerusakan Laptop")
+    st.caption("Mode teknisi – analisis awal berdasarkan gejala")
+
+    kategori = {}
+    for kode, g in gejala.items():
+        kategori.setdefault(g["kategori"], []).append((kode, g["nama"]))
+
+    selected = []
+
+    for kat, items in kategori.items():
+        with st.expander(f"Kategori: {kat}"):
+            for kode, nama in items:
+                if st.checkbox(nama, key=f"chk_{kode}"):
+                    selected.append(kode)
+
+    if st.button("🔎 Analisa Kerusakan", use_container_width=True):
+        hasil = []
+
+        for rule in rules:
+            cocok = [g for g in rule["gejala"] if g in selected]
+            if cocok:
+                hasil.append((rule, cocok))
+
+        if not hasil:
+            st.warning("Tidak ditemukan kecocokan rule.")
+        else:
+            for rule, cocok in hasil:
+                st.error(f"🔧 Kerusakan: {rule['kerusakan']}")
+
+                st.markdown("**Gejala terdeteksi:**")
+                for g in cocok:
+                    st.markdown(f"- {gejala[g]['nama']}")
+
+                st.markdown(f"**Tingkat Kerusakan:** {rule['tingkat']}")
+
+                st.markdown("**Langkah Cek Awal:**")
+                for c in rule["cek"]:
+                    st.markdown(f"- {c}")
+
+                st.success(f"**Rekomendasi:** {rule['solusi']}")
+                st.divider()
+
+
+# =================================================
+# 🧠 CRUD GEJALA
+# =================================================
+elif st.session_state.page == "gejala":
+    st.title("🧠 Manajemen Basis Pengetahuan – Gejala")
+
+    # ---------- CREATE ----------
+    st.subheader("➕ Tambah Gejala")
+    with st.form("add_gejala", clear_on_submit=True):
+        kode = st.text_input("Kode Gejala (contoh: g30)")
+        nama = st.text_input("Nama Gejala")
+        kategori_baru = st.text_input("Kategori")
+        submit = st.form_submit_button("Simpan")
+
+        if submit:
+            if not kode or not nama or not kategori_baru:
+                st.warning("Semua field wajib diisi")
+            elif kode in gejala:
+                st.error("Kode gejala sudah ada")
+            else:
+                gejala[kode] = {
+                    "nama": nama,
+                    "kategori": kategori_baru
+                }
+                save_json(GEJALA_FILE, gejala)
+                st.session_state.flash_success = "✅ Gejala berhasil ditambahkan"
+                st.rerun()
+
+    st.divider()
+
+    # ---------- UPDATE & DELETE ----------
+    st.subheader("✏️ Edit / 🗑️ Hapus Gejala")
+
+    pilih = st.selectbox("Pilih Gejala", list(gejala.keys()))
+
+    nama_edit = st.text_input("Nama Gejala", gejala[pilih]["nama"])
+    kategori_edit = st.text_input("Kategori", gejala[pilih]["kategori"])
+
+    col1, col2 = st.columns(2)
+
+    # UPDATE
+    with col1:
+        if st.button("💾 Update Gejala", use_container_width=True):
+            gejala[pilih] = {
+                "nama": nama_edit,
+                "kategori": kategori_edit
+            }
+            save_json(GEJALA_FILE, gejala)
+            st.session_state.flash_success = "✏️ Gejala berhasil diperbarui"
+            st.rerun()
+
+    # DELETE
+    with col2:
+        if st.button("🗑️ Hapus Gejala", use_container_width=True):
+            st.session_state.confirm_delete = pilih
+
+    # ---------- CONFIRM DIALOG ----------
+    if "confirm_delete" in st.session_state:
+
+        @st.dialog("Konfirmasi Penghapusan")
+        def confirm_delete_dialog():
+            kode = st.session_state.confirm_delete
+            st.error(f"⚠️ Yakin ingin menghapus gejala:\n\n**{gejala[kode]['nama']}** ?")
+
+            col_yes, col_no = st.columns(2)
+
+            with col_yes:
+                if st.button("✅ Yes, Hapus"):
+                    del gejala[kode]
+                    save_json(GEJALA_FILE, gejala)
+                    del st.session_state.confirm_delete
+                    st.session_state.flash_success = "🗑️ Gejala berhasil dihapus"
+                    st.rerun()
+
+            with col_no:
+                if st.button("❌ Cancel"):
+                    del st.session_state.confirm_delete
+                    st.info("Penghapusan dibatalkan")
+
+        confirm_delete_dialog()
+
+
+# =================================================
+# 📐 CRUD RULE
+# =================================================
+elif st.session_state.page == "rule":
+    st.title("📐 Manajemen Rule Diagnosa")
+
+    st.subheader("➕ Tambah Rule")
+    with st.form("add_rule"):
+        kerusakan = st.text_input("Nama Kerusakan")
+        tingkat = st.selectbox("Tingkat Kerusakan", ["Ringan", "Sedang", "Berat"])
+        gejala_rule = st.multiselect("Gejala Terkait", list(gejala.keys()))
+        cek = st.text_area("Langkah Cek Awal (1 baris = 1 langkah)")
+        solusi = st.text_area("Rekomendasi")
+        submit_rule = st.form_submit_button("Simpan Rule")
+
+        if submit_rule:
+            if not kerusakan or not gejala_rule:
+                st.warning("Nama kerusakan dan gejala wajib diisi")
+            else:
+                rules.append({
+                    "kerusakan": kerusakan,
+                    "gejala": gejala_rule,
+                    "tingkat": tingkat,
+                    "cek": cek.split("\n"),
+                    "solusi": solusi
+                })
+                save_json(RULES_FILE, rules)
+                st.session_state.flash_success = "📐 Rule berhasil ditambahkan"
+                st.rerun()
+
+    st.divider()
+
+    st.subheader("📋 Daftar Rule")
+    for r in rules:
+        with st.expander(r["kerusakan"]):
+            st.write("Gejala:", r["gejala"])
+            st.write("Tingkat:", r["tingkat"])
+            st.write("Cek Awal:", r["cek"])
+            st.write("Solusi:", r["solusi"])

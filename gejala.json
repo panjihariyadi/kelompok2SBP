@@ -1,94 +1,36 @@
 {
-  "g01": {
-    "nama": "Sering Blue Screen (BSOD)",
-    "kategori": "RAM"
-  },
-  "g02": {
-    "nama": "Laptop sering restart sendiri wihii",
-    "kategori": "RAM"
-  },
-  "g03": {
-    "nama": "Aplikasi sering force close",
-    "kategori": "RAM"
-  },
-  "g04": {
-    "nama": "Booting sangat lama",
-    "kategori": "Storage"
-  },
-  "g05": {
-    "nama": "Muncul pesan No Bootable Device",
-    "kategori": "Storage"
-  },
-  "g06": {
-    "nama": "File sering corrupt atau hilang",
-    "kategori": "Storage"
-  },
-  "g07": {
-    "nama": "Terdengar bunyi klik dari HDD",
-    "kategori": "Storage"
-  },
-  "g08": {
-    "nama": "Laptop mati sendiri saat panas",
-    "kategori": "Thermal"
-  },
-  "g09": {
-    "nama": "Kipas sangat berisik",
-    "kategori": "Thermal"
-  },
-  "g10": {
-    "nama": "Body laptop terasa panas berlebih",
-    "kategori": "Thermal"
-  },
-  "g11": {
-    "nama": "Baterai tidak mengisi",
-    "kategori": "Power"
-  },
-  "g12": {
-    "nama": "Laptop mati saat charger dicabut",
-    "kategori": "Power"
-  },
-  "g13": {
-    "nama": "Baterai cepat habis",
-    "kategori": "Power"
-  },
-  "g14": {
-    "nama": "Layar berkedip (flicker)",
-    "kategori": "Display"
-  },
-  "g15": {
-    "nama": "Layar bergaris",
-    "kategori": "Display"
-  },
-  "g16": {
-    "nama": "Layar gelap tapi mesin hidup",
-    "kategori": "Display"
-  },
-  "g17": {
-    "nama": "Keyboard mengetik sendiri",
-    "kategori": "Input Device"
-  },
-  "g18": {
-    "nama": "Beberapa tombol tidak berfungsi",
-    "kategori": "Input Device"
-  },
-  "g19": {
-    "nama": "Touchpad tidak berfungsi",
-    "kategori": "Input Device"
-  },
-  "g20": {
-    "nama": "Laptop mati total",
-    "kategori": "Motherboard"
-  },
-  "g21": {
-    "nama": "Port USB tidak berfungsi",
-    "kategori": "Motherboard"
-  },
-  "g22": {
-    "nama": "WiFi dan Bluetooth tidak terdeteksi",
-    "kategori": "Motherboard"
-  },
-  "g300": {
-    "nama": "test",
-    "kategori": "test"
-  }
+  "g01": { "nama": "Sering Blue Screen (BSOD)", "kategori": "RAM" },
+  "g02": { "nama": "Laptop sering restart sendiri", "kategori": "RAM" },
+  "g03": { "nama": "Aplikasi sering force close", "kategori": "RAM" },
+
+  "g04": { "nama": "Booting sangat lama", "kategori": "Storage" },
+  "g05": { "nama": "Muncul pesan No Bootable Device", "kategori": "Storage" },
+  "g06": { "nama": "File sering corrupt atau hilang", "kategori": "Storage" },
+  "g07": { "nama": "Terdengar bunyi klik dari HDD", "kategori": "Storage" },
+
+  "g08": { "nama": "Laptop mati sendiri saat panas", "kategori": "Thermal" },
+  "g09": { "nama": "Kipas sangat berisik", "kategori": "Thermal" },
+  "g10": { "nama": "Body laptop terasa panas berlebih", "kategori": "Thermal" },
+
+  "g11": { "nama": "Baterai tidak mengisi", "kategori": "Power" },
+  "g12": { "nama": "Laptop mati saat charger dicabut", "kategori": "Power" },
+  "g13": { "nama": "Baterai cepat habis", "kategori": "Power" },
+
+  "g14": { "nama": "Layar berkedip (flicker)", "kategori": "Display" },
+  "g15": { "nama": "Layar bergaris", "kategori": "Display" },
+  "g16": { "nama": "Layar gelap tapi mesin hidup", "kategori": "Display" },
+
+  "g17": { "nama": "Keyboard mengetik sendiri", "kategori": "Input Device" },
+  "g18": { "nama": "Beberapa tombol tidak berfungsi", "kategori": "Input Device" },
+  "g19": { "nama": "Touchpad tidak berfungsi", "kategori": "Input Device" },
+
+  "g20": { "nama": "Laptop mati total", "kategori": "Motherboard" },
+  "g21": { "nama": "Port USB tidak berfungsi", "kategori": "Motherboard" },
+  "g22": { "nama": "WiFi dan Bluetooth tidak terdeteksi", "kategori": "Motherboard" },
+
+  "g30": { "nama": "Windows sering crash", "kategori": "Software" },
+  "g31": { "nama": "Gagal update Windows", "kategori": "Software" },
+  "g32": { "nama": "Driver sering error atau hilang", "kategori": "Software" },
+  "g33": { "nama": "Laptop terasa lambat setelah install aplikasi", "kategori": "Software" },
+  "g34": { "nama": "Muncul pop-up iklan atau aplikasi aneh", "kategori": "Software" }
 }

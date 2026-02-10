@@ -1,7 +1,11 @@
 [
   {
     "kerusakan": "Kerusakan RAM",
-    "gejala": ["g01", "g02", "g03"],
+    "gejala": [
+      "g01",
+      "g02",
+      "g03"
+    ],
     "tingkat": "Sedang",
     "cek": [
       "Lepas dan pasang ulang RAM",
@@ -12,7 +16,12 @@
   },
   {
     "kerusakan": "Kerusakan Storage (HDD/SSD)",
-    "gejala": ["g04", "g05", "g06", "g07"],
+    "gejala": [
+      "g04",
+      "g05",
+      "g06",
+      "g07"
+    ],
     "tingkat": "Berat",
     "cek": [
       "Cek SMART disk",
@@ -23,7 +32,11 @@
   },
   {
     "kerusakan": "Overheating (Sistem Pendingin)",
-    "gejala": ["g08", "g09", "g10"],
+    "gejala": [
+      "g08",
+      "g09",
+      "g10"
+    ],
     "tingkat": "Sedang",
     "cek": [
       "Bersihkan kipas dan heatsink",
@@ -34,7 +47,11 @@
   },
   {
     "kerusakan": "Kerusakan Baterai",
-    "gejala": ["g11", "g12", "g13"],
+    "gejala": [
+      "g11",
+      "g12",
+      "g13"
+    ],
     "tingkat": "Ringan",
     "cek": [
       "Cek kesehatan baterai",
@@ -45,7 +62,11 @@
   },
   {
     "kerusakan": "Kerusakan LCD / Display",
-    "gejala": ["g14", "g15", "g16"],
+    "gejala": [
+      "g14",
+      "g15",
+      "g16"
+    ],
     "tingkat": "Sedang",
     "cek": [
       "Cek kabel fleksibel LCD",
@@ -55,7 +76,11 @@
   },
   {
     "kerusakan": "Kerusakan Keyboard / Touchpad",
-    "gejala": ["g17", "g18", "g19"],
+    "gejala": [
+      "g17",
+      "g18",
+      "g19"
+    ],
     "tingkat": "Ringan",
     "cek": [
       "Cek konektor keyboard",
@@ -65,7 +90,11 @@
   },
   {
     "kerusakan": "Kerusakan Motherboard",
-    "gejala": ["g20", "g21", "g22"],
+    "gejala": [
+      "g20",
+      "g21",
+      "g22"
+    ],
     "tingkat": "Berat",
     "cek": [
       "Cek tegangan masuk",
@@ -73,5 +102,70 @@
       "Tes minimal hardware"
     ],
     "solusi": "Perlu perbaikan level board atau ganti motherboard"
+  },
+  {
+    "kerusakan": "Masalah Stabilitas Windows",
+    "gejala": [
+      "g30"
+    ],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek Event Viewer (System & Application)",
+      "Cek penggunaan CPU dan RAM",
+      "Jalankan SFC /scannow"
+    ],
+    "solusi": "Perbaiki file sistem atau install ulang Windows"
+  },
+  {
+    "kerusakan": "Masalah Update Windows",
+    "gejala": [
+      "g31"
+    ],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek Windows Update Service",
+      "Pastikan ruang penyimpanan cukup",
+      "Reset komponen Windows Update"
+    ],
+    "solusi": "Perbaiki layanan update atau install ulang Windows"
+  },
+  {
+    "kerusakan": "Masalah Driver Perangkat",
+    "gejala": [
+      "g32"
+    ],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek Device Manager",
+      "Install ulang driver dari website resmi",
+      "Cek update BIOS jika diperlukan"
+    ],
+    "solusi": "Install ulang driver yang sesuai dengan perangkat"
+  },
+  {
+    "kerusakan": "Konflik Aplikasi / Beban Sistem",
+    "gejala": [
+      "g33"
+    ],
+    "tingkat": "Ringan",
+    "cek": [
+      "Cek aplikasi startup",
+      "Cek penggunaan CPU dan RAM",
+      "Uninstall aplikasi yang tidak diperlukan"
+    ],
+    "solusi": "Optimasi sistem atau install ulang Windows"
+  },
+  {
+    "kerusakan": "Indikasi Malware / Adware",
+    "gejala": [
+      "g34"
+    ],
+    "tingkat": "Sedang",
+    "cek": [
+      "Scan antivirus",
+      "Cek startup program",
+      "Cek extension browser"
+    ],
+    "solusi": "Bersihkan malware atau reinstall OS"
   }
 ]

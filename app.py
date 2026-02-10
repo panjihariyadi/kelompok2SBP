@@ -1,15 +1,14 @@
 import streamlit as st
 
-# Settingan tab browser
 st.set_page_config(page_title="Sistem Pakar Laptop Pro", page_icon="💻", layout="centered")
 
-# Header Aplikasi
-st.markdown("<h1 style='text-align: center;'>💻 Sistem Pakar Diagnosa Laptop</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: gray;'>Identifikasi Masalah Berdasarkan Gejala yang Muncul</p>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-weight: bold;'>Oleh: Kelompok 2 Cihuy</p>", unsafe_allow_html=True)
+# Header
+st.markdown("<h1 style='text-align: center;'>💻 Sistem Pakar Laptop (Pro)</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: gray;'>Transparansi Diagnosa Berbasis Gejala</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>Oleh: Kelompok 2 Cihuy</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# Dictionary Label (Database Gejala)
+# Dictionary Label
 labels = {
     "g01": "Sering Blue Screen (BSOD)", "g02": "Bunyi beep berulang saat nyala", "g03": "Aplikasi sering Force Close",
     "g04": "Booting sangat lama (>3 menit)", "g05": "Pesan 'No Bootable Device'", "g18": "Laptop freeze saat buka file",
@@ -30,87 +29,78 @@ labels = {
     "g49": "Angka muncul saat tekan huruf", "g50": "Input delay (lambat ngetik)"
 }
 
-st.subheader("Centang Gejala yang Anda Alami:")
-
-# Kita bagi 3 kolom biar gak scroll kejauhan ke bawah
+st.subheader("Centang Gejala yang Muncul:")
 col1, col2, col3 = st.columns(3)
 
-# Bagian input tanpa judul kategori
 with col1:
+    st.markdown("**RAM & Storage**")
     v01 = st.checkbox(labels["g01"]); v02 = st.checkbox(labels["g02"]); v03 = st.checkbox(labels["g03"])
     v04 = st.checkbox(labels["g04"]); v05 = st.checkbox(labels["g05"]); v18 = st.checkbox(labels["g18"])
-    v19 = st.checkbox(labels["g19"]); v20 = st.checkbox(labels["g20"]); v21 = st.checkbox(labels["g21"])
-    v22 = st.checkbox(labels["g22"]); v16 = st.checkbox(labels["g16"]); v17 = st.checkbox(labels["g17"])
-    v23 = st.checkbox(labels["g23"])
+    v19 = st.checkbox(labels["g19"]); v20 = st.checkbox(labels["g20"]); v21 = st.checkbox(labels["g21"]); v22 = st.checkbox(labels["g22"])
+    st.markdown("**Motherboard**")
+    v16 = st.checkbox(labels["g16"]); v17 = st.checkbox(labels["g17"]); v23 = st.checkbox(labels["g23"])
+    v24 = st.checkbox(labels["g24"]); v25 = st.checkbox(labels["g25"]); v26 = st.checkbox(labels["g26"]); v27 = st.checkbox(labels["g27"])
 
 with col2:
-    v24 = st.checkbox(labels["g24"]); v25 = st.checkbox(labels["g25"]); v26 = st.checkbox(labels["g26"])
-    v27 = st.checkbox(labels["g27"]); v06 = st.checkbox(labels["g06"]); v07 = st.checkbox(labels["g07"])
-    v08 = st.checkbox(labels["g08"]); v28 = st.checkbox(labels["g28"]); v29 = st.checkbox(labels["g29"])
-    v30 = st.checkbox(labels["g30"]); v31 = st.checkbox(labels["g31"]); v32 = st.checkbox(labels["g32"])
-    v09 = st.checkbox(labels["g09"])
+    st.markdown("**Suhu & Cooling**")
+    v06 = st.checkbox(labels["g06"]); v07 = st.checkbox(labels["g07"]); v08 = st.checkbox(labels["g08"])
+    v28 = st.checkbox(labels["g28"]); v29 = st.checkbox(labels["g29"]); v30 = st.checkbox(labels["g30"])
+    v31 = st.checkbox(labels["g31"]); v32 = st.checkbox(labels["g32"])
+    st.markdown("**Baterai & Charger**")
+    v09 = st.checkbox(labels["g09"]); v10 = st.checkbox(labels["g10"]); v33 = st.checkbox(labels["g33"])
+    v34 = st.checkbox(labels["g34"]); v35 = st.checkbox(labels["g35"]); v36 = st.checkbox(labels["g36"]); v37 = st.checkbox(labels["g37"])
 
 with col3:
-    v10 = st.checkbox(labels["g10"]); v33 = st.checkbox(labels["g33"]); v34 = st.checkbox(labels["g34"])
-    v35 = st.checkbox(labels["g35"]); v36 = st.checkbox(labels["g36"]); v37 = st.checkbox(labels["g37"])
+    st.markdown("**LCD & Visual**")
     v11 = st.checkbox(labels["g11"]); v12 = st.checkbox(labels["g12"]); v13 = st.checkbox(labels["g13"])
     v38 = st.checkbox(labels["g38"]); v39 = st.checkbox(labels["g39"]); v40 = st.checkbox(labels["g40"])
-    v41 = st.checkbox(labels["g41"]); v42 = st.checkbox(labels["g42"]); v14 = st.checkbox(labels["g14"])
-    v15 = st.checkbox(labels["g15"]); v43 = st.checkbox(labels["g43"]); v44 = st.checkbox(labels["g44"])
-    v45 = st.checkbox(labels["g45"]); v47 = st.checkbox(labels["g47"]); v48 = st.checkbox(labels["g48"])
-    v49 = st.checkbox(labels["g49"]); v50 = st.checkbox(labels["g50"])
+    v41 = st.checkbox(labels["g41"]); v42 = st.checkbox(labels["g42"])
+    st.markdown("**Keyboard & Touchpad**")
+    v14 = st.checkbox(labels["g14"]); v15 = st.checkbox(labels["g15"]); v43 = st.checkbox(labels["g43"])
+    v44 = st.checkbox(labels["g44"]); v45 = st.checkbox(labels["g45"]); v47 = st.checkbox(labels["g47"])
+    v48 = st.checkbox(labels["g48"]); v49 = st.checkbox(labels["g49"]); v50 = st.checkbox(labels["g50"])
 
 st.markdown("---")
 
-# Tombol Eksekusi
 if st.button("MULAI ANALISIS HARDWARE", use_container_width=True):
     diagnosa = []
     
-    # Fungsi pembantu buat nangkep list gejala yang dicentang per rule
     def get_selected(ids):
+        # Mengambil list gejala yang dicentang
         return [labels[i] for i in ids if globals().get(f"v{i[1:]}")]
 
-    # --- LOGIKA INFERENSI (Forward Chaining) ---
-    
-    # Cek RAM
+    # LOGIKA RULES
     if (v01 and v02) or (v03 and v18 and v48):
-        diagnosa.append({"n": "RAM (Memory)", "g": get_selected(["g01", "g02", "g03", "g18", "g48"]), "s": "Bersihkan pin emas RAM pakai penghapus atau coba ganti modul RAM baru."})
+        diagnosa.append({"n": "RAM (Memory)", "g": get_selected(["g01", "g02", "g03", "g18", "g48"]), "s": "Bersihkan pin RAM atau ganti modul."})
     
-    # Cek Storage
     if v04 or v05 or v19 or v20 or v21 or v22:
-        diagnosa.append({"n": "Storage (HDD/SSD)", "g": get_selected(["g04", "g05", "g18", "g19", "g20", "g21", "g22"]), "s": "Backup data segera! Cek kesehatan disk; jika sudah parah, ganti ke SSD."})
+        diagnosa.append({"n": "Storage (HDD/SSD)", "g": get_selected(["g04", "g05", "g18", "g19", "g20", "g21", "g22"]), "s": "Cek kesehatan disk. Ganti ke SSD jika perlu."})
         
-    # Cek Panas
     if v06 or v07 or v08 or v28 or v29 or v30 or v31:
-        diagnosa.append({"n": "Sistem Pendingin (Overheat)", "g": get_selected(["g06", "g07", "g08", "g28", "g29", "g30", "g31"]), "s": "Bersihkan debu di kipas dan ganti thermal paste pada prosesor."})
+        diagnosa.append({"n": "Sistem Pendingin", "g": get_selected(["g06", "g07", "g08", "g28", "g29", "g30", "g31"]), "s": "Bersihkan fan & repaste thermal paste."})
 
-    # Cek Baterai
     if v09 or v10 or v33 or v34 or v37:
-        diagnosa.append({"n": "Baterai / Power Circuit", "g": get_selected(["g09", "g10", "g33", "g34", "g37"]), "s": "Baterai kelihatannya sudah drop atau bocor. Sebaiknya ganti unit baru."})
+        diagnosa.append({"n": "Baterai / Power Circuit", "g": get_selected(["g09", "g10", "g33", "g34", "g37"]), "s": "Cek cell baterai atau ganti unit baru."})
 
-    # Cek Layar
     if v11 or v12 or v13 or v38 or v39 or v40 or v41 or v42:
-        diagnosa.append({"n": "Panel Layar LCD", "g": get_selected(["g11", "g12", "g13", "g38", "g39", "g40", "g41", "g42"]), "s": "Cek kabel fleksibel atau ganti panel LCD jika sudah pecah/bergaris."})
+        diagnosa.append({"n": "Panel Layar LCD", "g": get_selected(["g11", "g12", "g13", "g38", "g39", "g40", "g41", "g42"]), "s": "Cek kabel fleksibel atau ganti panel."})
 
-    # Cek Input Device
     if v14 or v15 or v43 or v44 or v45 or v47 or v49 or v50:
-        diagnosa.append({"n": "Keyboard / Touchpad", "g": get_selected(["g14", "g15", "g43", "g44", "g45", "g47", "g49", "g50"]), "s": "Bersihkan sela tombol. Jika ada tombol mati total, ganti satu set modul keyboard."})
+        diagnosa.append({"n": "Keyboard / Touchpad", "g": get_selected(["g14", "g15", "g43", "g44", "g45", "g47", "g49", "g50"]), "s": "Ganti modul keyboard atau bersihkan sirkuit."})
 
-    # Cek Mesin
     if v16 or v17 or v23 or v24 or v25 or v26 or v27:
-        diagnosa.append({"n": "Motherboard & IC Power", "g": get_selected(["g16", "g17", "g23", "g24", "g25", "g26", "g27"]), "s": "Masalah serius pada hardware mesin. Harus dicek oleh teknisi spesialis board."})
+        diagnosa.append({"n": "Motherboard & IC Power", "g": get_selected(["g16", "g17", "g23", "g24", "g25", "g26", "g27"]), "s": "Butuh penanganan teknisi spesialis mesin."})
 
-    # --- TAMPILAN OUTPUT ---
+    # OUTPUT HASIL
     if diagnosa:
-        st.subheader("Hasil Analisis:")
+        st.subheader("Hasil Analisis Sistem:")
         for d in diagnosa:
             with st.container():
-                # Hasil diagnosa muncul dengan label kategori kerusakannya di sini
-                st.error(f"### Terdeteksi Kerusakan: {d['n']}")
-                st.markdown("**Gejala yang memicu diagnosa ini:**")
-                for item in d['g']:
-                    st.markdown(f"- {item}")
-                st.success(f"**Solusi:** {d['s']}")
+                st.error(f"### Kerusakan: {d['n']}")
+                st.markdown("**Gejala yang terdeteksi:**")
+                for g in d['g']:
+                    st.markdown(f"- {g}")
+                st.success(f"**Saran Perbaikan:** {d['s']}")
                 st.markdown("---")
     else:
-        st.warning("Pilih beberapa gejala dulu untuk melihat hasil diagnosa.")
+        st.warning("Gejala belum mencukupi untuk diagnosa otomatis.")

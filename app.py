@@ -97,12 +97,11 @@ if st.session_state.page == "diagnosa":
                 st.divider()
 
 # =================================================
-# 🧠 CRUD GEJALA (LENGKAP & STABIL)
+# 🧠 CRUD GEJALA (TETAP RAPI)
 # =================================================
 elif st.session_state.page == "gejala":
     st.title("🧠 Manajemen Basis Pengetahuan – Gejala")
 
-    # ---------- CREATE ----------
     st.subheader("➕ Tambah Gejala")
     with st.form("add_gejala", clear_on_submit=True):
         kode = st.text_input("Kode Gejala (contoh: g40)")
@@ -116,72 +115,46 @@ elif st.session_state.page == "gejala":
             elif kode in gejala:
                 st.error("Kode gejala sudah ada")
             else:
-                gejala[kode] = {
-                    "nama": nama,
-                    "kategori": kategori_baru
-                }
+                gejala[kode] = {"nama": nama, "kategori": kategori_baru}
                 save_json(GEJALA_FILE, gejala)
                 st.session_state.flash = "✅ Gejala berhasil ditambahkan"
                 st.rerun()
 
-    st.divider()
-
-    # ---------- UPDATE & DELETE ----------
-    st.subheader("✏️ Edit / 🗑️ Hapus Gejala")
-
-    pilih = st.selectbox("Pilih Gejala", list(gejala.keys()))
-
-    nama_edit = st.text_input("Nama Gejala", gejala[pilih]["nama"])
-    kategori_edit = st.text_input("Kategori", gejala[pilih]["kategori"])
-
-    col1, col2 = st.columns(2)
-
-    # UPDATE
-    with col1:
-        if st.button("💾 Update Gejala", use_container_width=True):
-            gejala[pilih] = {
-                "nama": nama_edit,
-                "kategori": kategori_edit
-            }
-            save_json(GEJALA_FILE, gejala)
-            st.session_state.flash = "✏️ Gejala berhasil diperbarui"
-            st.rerun()
-
-    # DELETE
-    with col2:
-        if st.button("🗑️ Hapus Gejala", use_container_width=True):
-            st.session_state.confirm_delete_gejala = pilih
-
-    # CONFIRM DELETE
-    if "confirm_delete_gejala" in st.session_state:
-
-        @st.dialog("Konfirmasi Penghapusan Gejala")
-        def confirm_delete_gejala():
-            kode = st.session_state.confirm_delete_gejala
-            st.error(f"Yakin ingin menghapus gejala:\n\n**{gejala[kode]['nama']}** ?")
-
-            col_y, col_n = st.columns(2)
-
-            with col_y:
-                if st.button("✅ Yes, Hapus"):
-                    del gejala[kode]
-                    save_json(GEJALA_FILE, gejala)
-                    del st.session_state.confirm_delete_gejala
-                    st.session_state.flash = "🗑️ Gejala berhasil dihapus"
-                    st.rerun()
-
-            with col_n:
-                if st.button("❌ Cancel"):
-                    del st.session_state.confirm_delete_gejala
-                    st.info("Penghapusan dibatalkan")
-
-        confirm_delete_gejala()
-
 # =================================================
-# 📐 CRUD RULE (LENGKAP)
+# 📐 CRUD RULE (CREATE + UPDATE + DELETE)
 # =================================================
 elif st.session_state.page == "rule":
     st.title("📐 Manajemen Rule Diagnosa")
+
+    # ---------- CREATE RULE ----------
+    st.subheader("➕ Tambah Rule")
+    with st.form("add_rule", clear_on_submit=True):
+        kerusakan = st.text_input("Nama Kerusakan")
+        tingkat = st.selectbox("Tingkat Kerusakan", ["Ringan", "Sedang", "Berat"])
+        gejala_rule = st.multiselect("Gejala Terkait", list(gejala.keys()))
+        cek = st.text_area("Langkah Cek Awal (1 baris = 1 langkah)")
+        solusi = st.text_area("Rekomendasi")
+        submit_rule = st.form_submit_button("Simpan Rule")
+
+        if submit_rule:
+            if not kerusakan or not gejala_rule:
+                st.warning("Nama kerusakan dan gejala wajib diisi")
+            else:
+                rules.append({
+                    "kerusakan": kerusakan,
+                    "gejala": gejala_rule,
+                    "tingkat": tingkat,
+                    "cek": cek.split("\n"),
+                    "solusi": solusi
+                })
+                save_json(RULES_FILE, rules)
+                st.session_state.flash = "📐 Rule berhasil ditambahkan"
+                st.rerun()
+
+    st.divider()
+
+    # ---------- EDIT & DELETE RULE ----------
+    st.subheader("✏️ Edit / 🗑️ Hapus Rule")
 
     rule_names = [r["kerusakan"] for r in rules]
     idx = st.selectbox(
@@ -192,7 +165,6 @@ elif st.session_state.page == "rule":
 
     rule = rules[idx]
 
-    st.subheader("✏️ Edit Rule")
     with st.form("edit_rule"):
         nama = st.text_input("Nama Kerusakan", rule["kerusakan"])
         tingkat = st.selectbox(
@@ -200,28 +172,26 @@ elif st.session_state.page == "rule":
             ["Ringan", "Sedang", "Berat"],
             index=["Ringan", "Sedang", "Berat"].index(rule["tingkat"])
         )
-        gejala_rule = st.multiselect(
+        gejala_edit = st.multiselect(
             "Gejala Terkait",
             list(gejala.keys()),
             default=rule["gejala"]
         )
         cek = st.text_area("Langkah Cek Awal", "\n".join(rule["cek"]))
         solusi = st.text_area("Rekomendasi", rule["solusi"])
-        submit = st.form_submit_button("Update Rule")
+        update_btn = st.form_submit_button("Update Rule")
 
-        if submit:
+        if update_btn:
             rules[idx] = {
                 "kerusakan": nama,
-                "gejala": gejala_rule,
+                "gejala": gejala_edit,
                 "tingkat": tingkat,
                 "cek": cek.split("\n"),
                 "solusi": solusi
             }
             save_json(RULES_FILE, rules)
-            st.session_state.flash = "📐 Rule berhasil diperbarui"
+            st.session_state.flash = "✏️ Rule berhasil diperbarui"
             st.rerun()
-
-    st.divider()
 
     if st.button("🗑️ Hapus Rule", use_container_width=True):
         st.session_state.confirm_delete_rule = idx
